@@ -23,7 +23,7 @@ partidos políticos que se presenten a las Elecciones 2016.
 Idealmente algo parecido al aplicativo uterino <http://www.selallevanfacil.info/home/>.
 
 ## Dependencias
-* python3
+* python 2.7.5
 * ``pip install -r requirements/testing.txt``
 
 ## Configuración
