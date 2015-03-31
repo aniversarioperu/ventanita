@@ -5,6 +5,11 @@
 
 import _mssql
 import csv
+import datetime
+
+def replace_date(date_string):
+    if(date_string != ''):
+        return datetime.datetime.strptime(date_string, '%Y%m%d')
 
 
 def replace_quote(content):
@@ -13,8 +18,10 @@ def replace_quote(content):
 
 
 def replace_empty(content):
-    if content == '':
+    if (content == '' or content == 'None'):
         return 0
+    else:
+        return content
 
 
 def importar(row):
@@ -39,12 +46,13 @@ def importar(row):
         replace_quote(row['DEPARTAMENTO DE NACIMIENTO']),
         replace_quote(row['PROVINCIA DE NACIMIENTO']),
         replace_quote(row['DISTRITO DE NACIMIENTO']),
-        replace_quote(row['FECHA DE NACIMIENTO']),
+        replace_date(row['FECHA DE NACIMIENTO']),
         replace_quote(row['DEPARTAMENTO DE RESIDENCIA']),
         replace_quote(row['PROVINCIA DE RESIDENCIA']),
         replace_quote(row['DISTRITO DE RESIDENCIA']),
         replace_quote(row['LUGAR DE RESIDENCIA']),
         replace_empty(row['TIEMPO DE RESIDENCIA']))
+    print query
     conn.execute_non_query(query)
     conn.close()
 
