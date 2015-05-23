@@ -11,3 +11,6 @@ def index(request):
 
 def candidatos_con_sentencias(request):
     return render(request, 'demo/1400_candidatos.html')
+
+def las_20_agrupaciones(request):
+    return render(request, 'demo/20_agrupaciones.html')
