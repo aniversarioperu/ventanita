@@ -1,4 +1,5 @@
 # Copyright 2015 by Vitoko. All rights reserved.
+# Revisions 2015 by McPollo. All rights reserved.
 # This code is part of the Ventanita distribution and governed by its
 # license. Please see the LICENSE file that should have been included
 # as part of this package.
@@ -12,6 +13,7 @@ DB_SERVER = 's10.winhost.com:1433'
 DB_USERNAME = 'DB_76507_ventanita_user'
 DB_PASSWORD = '123abc$'
 DB_NAME = 'DB_76507_ventanita'
+
 
 def replace_quote(content):
     if content:
