@@ -38,7 +38,7 @@ Hacer un *aplicativo* web usando el **framework Django**. Este aplicativo permit
 que usuarios puedan dar evaluar rápidamente la idoneidad de los candidatos y
 partidos políticos que se presenten a las Elecciones 2016.
 
-Idealmente algo parecido al aplicativo uterino <http://www.selallevanfacil.info/home/>.
+Idealmente algo parecido al aplicativo uterino <http://www.selallevanfacil.info/home/>. [Mirror](https://web.archive.org/web/20131125011350/http://www.selallevanfacil.info/home/)
 
 
 ## Cómo instalar Ventanita?
