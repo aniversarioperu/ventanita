@@ -11,7 +11,7 @@ class Candidato(models.Model):
     candidato_jne_id = models.IntegerField(help_text='ID asignado por el JNE')
 
     # Datos Personales
-    dni = models.CharField(max_length=8)
+    dni = models.CharField(max_length=8, primary_key=True)
     nombres = models.CharField(max_length=300)
     apellido_materno = models.CharField(max_length=300)
     apellido_paterno = models.CharField(max_length=300)
