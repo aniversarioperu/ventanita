@@ -29,6 +29,6 @@ class TestCommandImportRedam(TestCase):
 
     def test_import(self):
         d = DeudorRedam.objects.get(dni='03847515')
-        result = d.nombres
+        result = d.given_names
         expected = 'SEGUNDO HUMBERTO'
         self.assertEqual(expected, result)

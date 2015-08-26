@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BienInmueble',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('registro', models.CharField(max_length=300)),
                 ('valor', models.IntegerField()),
                 ('tipo', models.CharField(max_length=300)),
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='BienMueble',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('bien', models.CharField(max_length=300)),
                 ('tipo', models.CharField(max_length=300)),
                 ('descripcion', models.CharField(max_length=300)),
@@ -34,9 +34,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Candidato',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('candidato_jne_id', models.IntegerField(help_text='ID asignado por el JNE')),
-                ('dni', models.CharField(max_length=8)),
+                ('dni', models.CharField(primary_key=True, max_length=8, serialize=False)),
                 ('nombres', models.CharField(max_length=300)),
                 ('apellido_materno', models.CharField(max_length=300)),
                 ('apellido_paterno', models.CharField(max_length=300)),
@@ -59,17 +58,17 @@ class Migration(migrations.Migration):
                 ('nacimiento_provincia', models.CharField(max_length=300)),
                 ('nacimiento_departamento', models.CharField(max_length=300)),
                 ('residencia_lugar', models.TextField(blank=True)),
-                ('residencia_ubigeo', models.CharField(blank=True, max_length=300)),
-                ('residencia_distrito', models.CharField(blank=True, max_length=300)),
-                ('residencia_tiempo', models.CharField(blank=True, max_length=300)),
-                ('residencia_provincia', models.CharField(blank=True, max_length=300)),
-                ('residencia_departamento', models.CharField(blank=True, max_length=300)),
+                ('residencia_ubigeo', models.CharField(max_length=300, blank=True)),
+                ('residencia_distrito', models.CharField(max_length=300, blank=True)),
+                ('residencia_tiempo', models.CharField(max_length=300, blank=True)),
+                ('residencia_provincia', models.CharField(max_length=300, blank=True)),
+                ('residencia_departamento', models.CharField(max_length=300, blank=True)),
             ],
         ),
         migrations.CreateModel(
             name='Civil',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('expediente', models.CharField(max_length=300)),
                 ('juzgado', models.CharField(max_length=300)),
                 ('materia', models.CharField(max_length=300)),
@@ -80,28 +79,28 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DeudorRedam',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
-                ('dni', models.CharField(max_length=8)),
-                ('apellido_paterno', models.CharField(max_length=100)),
-                ('apellido_materno', models.CharField(max_length=100)),
-                ('nombres', models.CharField(max_length=200)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('dni', models.TextField()),
+                ('paternal_surname', models.TextField()),
+                ('maternal_surname', models.TextField()),
+                ('given_names', models.TextField()),
                 ('url', models.URLField()),
-                ('debe', models.FloatField()),
+                ('debt', models.FloatField()),
             ],
         ),
         migrations.CreateModel(
-            name='DeudorRedamVinculo',
+            name='DeudorRedamBond',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
-                ('vinculo', models.CharField(max_length=100)),
-                ('nombre_completo', models.CharField(max_length=300)),
-                ('deudor', models.ForeignKey(to='core.DeudorRedam')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('bond_type', models.TextField()),
+                ('full_name', models.TextField()),
+                ('debtor', models.ForeignKey(to='core.DeudorRedam')),
             ],
         ),
         migrations.CreateModel(
             name='Eleccion',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('proceso_electoral', models.CharField(max_length=300)),
                 ('cargo', models.CharField(max_length=300)),
                 ('provincia', models.CharField(max_length=300)),
@@ -117,13 +116,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Estudio',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
-                ('tipo_de_estudio', models.CharField(blank=True, max_length=300, choices=[('primaria', 'primaria'), ('tecnica', 'tecnica'), ('secundaria', 'secundaria'), ('universitaria', 'universitaria'), ('postgrado', 'postgrado')], help_text='Colegio, instituto, universidad y grado de instrucción.')),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('tipo_de_estudio', models.CharField(choices=[('primaria', 'primaria'), ('tecnica', 'tecnica'), ('secundaria', 'secundaria'), ('universitaria', 'universitaria'), ('postgrado', 'postgrado')], help_text='Colegio, instituto, universidad y grado de instrucción.', max_length=300, blank=True)),
                 ('concluido', models.NullBooleanField()),
                 ('inicio', models.IntegerField()),
                 ('fin', models.IntegerField()),
                 ('codigo_anr', models.TextField(blank=True)),
-                ('curso', models.CharField(max_length=300, help_text='Nombre de estudio')),
+                ('curso', models.CharField(help_text='Nombre de estudio', max_length=300)),
                 ('especialidad', models.CharField(max_length=300)),
                 ('grado_titulo', models.CharField(max_length=300)),
                 ('facultad', models.CharField(max_length=300)),
@@ -137,7 +136,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Experiencia',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('sector', models.CharField(max_length=300)),
                 ('cargo', models.IntegerField()),
                 ('provincia', models.CharField(max_length=300)),
@@ -152,8 +151,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='InstitucionEducativa',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
-                ('sha1', models.CharField(max_length=40, help_text='This is only used when importing data.', db_index=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
+                ('sha1', models.CharField(help_text='This is only used when importing data.', db_index=True, max_length=40)),
                 ('nombre', models.CharField(max_length=300)),
                 ('pais', models.CharField(max_length=300)),
                 ('extranjero', models.CharField(max_length=300)),
@@ -165,7 +164,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Militancia',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('inicio', models.IntegerField()),
                 ('fin', models.IntegerField()),
                 ('org_politica', models.CharField(max_length=300)),
@@ -175,7 +174,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Observacion',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('referencia', models.CharField(max_length=300)),
                 ('anotacion', models.CharField(max_length=2000)),
                 ('candidato', models.ForeignKey(to='core.Candidato')),
@@ -184,7 +183,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='OtraExperiencia',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('cargo', models.CharField(max_length=300)),
                 ('entidad', models.CharField(max_length=300)),
                 ('inicio', models.IntegerField()),
@@ -195,7 +194,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Partidario',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('cargo', models.CharField(max_length=300)),
                 ('ambito', models.CharField(max_length=300)),
                 ('org_politica', models.CharField(max_length=300)),
@@ -207,7 +206,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Penal',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', auto_created=True, primary_key=True, serialize=False)),
                 ('delito', models.CharField(max_length=300)),
                 ('expediente', models.CharField(max_length=300)),
                 ('juzgado', models.CharField(max_length=300)),

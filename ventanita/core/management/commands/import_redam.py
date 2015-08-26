@@ -10,7 +10,7 @@ from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 
 from core.models import DeudorRedam
-from core.models import DeudorRedamVinculo
+from core.models import DeudorRedamBond
 
 
 class Command(BaseCommand):
@@ -35,19 +35,19 @@ class Command(BaseCommand):
         with codecs.open(json_file, "r") as file_handle:
             dump = file_handle.readlines()
 
-        vinculo_objs = []
+        bond_obj = []
         for line in dump:
             line = line.strip()
             if line != '':
                 item = json.loads(line)
-                vinculo = item['vinculo']
-                del item['vinculo']
+                bond = item['bond']
+                del item['bond']
 
                 d = DeudorRedam(**item)
                 d.save()
-                if len(vinculo) > 0:
-                    vinculo_objs += [DeudorRedamVinculo(deudor_id=d.id,
-                                                        vinculo=i['vinculo'],
-                                                        nombre_completo=i['nombre_completo'],
-                                                        ) for i in vinculo]
-        DeudorRedamVinculo.objects.bulk_create(vinculo_objs)
+                if len(bond) > 0:
+                    bond_obj += [DeudorRedamBond(debtor=d,
+                                                 bond_type=i['bond_type'],
+                                                 full_name=i['full_name'],
+                                                 ) for i in bond]
+        DeudorRedamBond.objects.bulk_create(bond_obj)

@@ -1,4 +1,5 @@
 # Copyright 2015 by AniversarioPeru. All rights reserved.
+# Revisions 2015 copyright by McPollo. All rights reserved.
 # This code is part of the Ventanita distribution and governed by its
 # license. Please see the LICENSE file that should have been included
 # as part of this package.
@@ -53,13 +54,10 @@ class Command(BaseCommand):
 
         if sheet == '0':
             items = []
-            n = len(dump)
-            bar = pyprind.ProgBar(n)
-            for line in dump:
+            for line in pyprind.prog_bar(dump):
                 item = self.parse_line(line)
                 if item is not None:
                     items.append(Candidato(**item))
-                bar.update()
             Candidato.objects.bulk_create(items)
         elif sheet == '1':
             self.import_institucion_educativa(dump)
@@ -70,10 +68,7 @@ class Command(BaseCommand):
 
     def import_institucion_educativa(self, dump):
         instituciones = []
-
-        n = len(dump)
-        bar = pyprind.ProgBar(n)
-        for line in dump:
+        for line in pyprind.prog_bar(dump):
             fields = line.strip().split('\t')
 
             this_inst_edu = get_institucion_primaria(fields)
@@ -83,16 +78,14 @@ class Command(BaseCommand):
             this_inst_edu = get_institucion_secundaria(fields)
             if this_inst_edu not in instituciones:
                 instituciones.append(this_inst_edu)
-            bar.update()
 
         upload_instituciones(instituciones)
 
     def import_education_for_candidate(self, dump):
         estudios = []
         lines = self.convert_to_lines(dump)
-        n = len(lines)
-        bar = pyprind.ProgBar(n, monitor=True, title="Importing studies for candidate")
-        for line in lines:
+        for line in pyprind.prog_bar(
+                lines, monitor=True, title="Importing studies for candidate"):
             if self.sheet == '2':
                 e = self.construct_education_obj(line, 'superior')
                 estudios.append(e)
@@ -105,19 +98,16 @@ class Command(BaseCommand):
                 if e.inicio != '0':
                     estudios.append(e)
 
-            bar.update()
         Estudio.objects.bulk_create(estudios)
 
     def import_institucion_educativa_superior(self, dump):
         instituciones = []
         lines = self.convert_to_lines(dump)
-        n = len(lines)
-        bar = pyprind.ProgBar(n, monitor=True, title="Importing high studies for candidate")
-        for line in lines:
+        for line in pyprind.prog_bar(
+                lines, monitor=True, title="Importing high studies for candidate"):
             this_inst_edu = get_institucion_superior(line)
             if this_inst_edu not in instituciones:
                 instituciones.append(this_inst_edu)
-            bar.update()
         upload_instituciones(instituciones)
 
     def convert_to_lines(self, dump):
